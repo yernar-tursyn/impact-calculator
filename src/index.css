@@ -11,3 +11,109 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* Контейнер для фонового изображения */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; Высота контейнера на весь экран */
+  background-color: #ffffff; /* Белый фон страницы */
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* Фоновое изображение */
+.image {
+  max-width: 100%; /* Изображение не превышает ширину окна */
+  height: auto;    /* Высота автоматически подстраивается */
+  object-fit: contain; /* Сохраняет пропорции изображения */
+  z-index: 0;      /* Помещаем под слайдер */
+}
+
+/* Контейнер для слайдера */
+.slider-container {
+  position: absolute;
+  top: 5%; /* Расположить слайдер сверху */
+  width: 80%; /* Ширина слайдера относительно родителя */
+  z-index: 2; /* Поверх фонового изображения */
+  text-align: center;
+}
+
+/* Слайдер */
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Слайдер занимает всю ширину контейнера */
+  aspect-ratio: 16 / 9; /* Задаёт пропорции 16:9 для слайдера */
+}
+
+/* Картинка в слайдере */
+.slide-image {
+  width: 100%; /* Изображение адаптируется под ширину слайдера */
+  height: 100%; /* Высота подстраивается под aspect-ratio */
+  object-fit: cover; /* Сохраняет пропорции и обрезает лишнее */
+}
+
+/* Кнопки навигации */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.nav-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+/* Пагинация */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background: #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: #333;
+}
+
+.impact-planner {
+  background-color: #F7F6E6;
+  padding: 20px 40px;
+  /* width: 1100px; */
+  margin: 30px 140px 20px;
+  box-sizing: border-box;
+}

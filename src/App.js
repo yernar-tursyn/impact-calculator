@@ -2,6 +2,13 @@ import React, { useRef, useState } from "react";
 import "./App.css";
 import "./index.css";
 import Confetti from "react-confetti";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+
+const countries = ["США", "Канада", "Германия", "Великобритания", "Австралия"];
+const formats = ["Очное обучение", "Дистанционное обучение", "Смешанное обучение"];
+const financialAid = ["Да", "Нет"];
+const professions = ["Инженер", "Программист", "Маркетолог", "Дизайнер", "Врач"];
+const incomeForecasts = ["20,000$", "50,000$", "100,000$", "200,000$"];
 
 const tests = [
   {
@@ -72,6 +79,13 @@ const images = [
 ];
 
 function App() {
+
+  const [activeFAQ, setActiveFAQ] = useState(null);
+
+  const handleFAQClick = (index) => {
+    setActiveFAQ(activeFAQ === index ? null : index);
+  };
+
   const [currentTestIndex, setCurrentTestIndex] = useState(0);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -460,12 +474,27 @@ function App() {
             <div className="financial-form">
               <select>
                 <option>Выберите страну поступления</option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country}>
+                    {country}
+                  </option>
+                ))}
               </select>
               <select>
                 <option>Выберите формат обучения</option>
+                {formats.map((format, index) => (
+                  <option key={index} value={format}>
+                    {format}
+                  </option>
+                ))}
               </select>
               <select>
                 <option>Требуется ли финансовая помощь</option>
+                {financialAid.map((aid, index) => (
+                  <option key={index} value={aid}>
+                    {aid}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -480,9 +509,19 @@ function App() {
             <div className="career-form">
               <select>
                 <option>Выберите профессию для поступления</option>
+                {professions.map((profession, index) => (
+                  <option key={index} value={profession}>
+                    {profession}
+                  </option>
+                ))}
               </select>
               <select>
                 <option>Выберите прогноз дохода</option>
+                {incomeForecasts.map((income, index) => (
+                  <option key={index} value={income}>
+                    {income}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -491,6 +530,100 @@ function App() {
           <p className="footer-text">Осознанный выбор специальности и уверенность в будущем ребёнка.</p>
         </section>
       </div>
+
+      <div className="main-container">
+        {/* FAQ Section */}
+        <section className="faq-section">
+          <h2>FAQ</h2>
+          <div className="faq-list">
+            {[
+              "Сколько это стоит?",
+              "Почему я должен доверять результатам?",
+              "Сколько времени займет тест?",
+              "Могу ли я работать в калькуляторе постоянно?",
+            ].map((question, index) => (
+              <div
+                key={index}
+                className={`faq-item ${activeFAQ === index ? "expanded" : ""}`}
+                onClick={() => handleFAQClick(index)}
+              >
+                <div className="faq-header">
+                  <span className="faq-index">{`0${index + 1}`}</span>{" "}
+                  <span className="faq-question">{question}</span>
+                  <span className="faq-toggle-icon">
+                    {activeFAQ === index ? <FiChevronUp /> : <FiChevronDown />}
+                  </span>
+                </div>
+                {activeFAQ === index && (
+                  <div className="faq-content">
+                    Здесь вы можете добавить развернутый ответ на вопрос "{question}".
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* University Section */}
+        <section className="university-section">
+          <h2>Университет вашей мечты ждет вас!</h2>
+          <p className="university-intro">
+            <b>Impact Admission</b> — это команда экспертов, которые уже 5 лет
+            помогают абитуриентам поступать в топовые вузы мира. Мы знаем, как
+            важно правильно спланировать поступление и подготовить сильный
+            профиль.
+          </p>
+
+          <h3 className="trust-title">Почему доверяют нам?</h3>
+          <div className="trust-points">
+            <div className="trust-point">
+              Мы разработали ImpactPlanner, чтобы сделать процесс подготовки
+              простым и доступным.
+            </div>
+            <div className="trust-point">
+              У нас десятки историй успеха, и ваш ребенок может стать следующим.
+            </div>
+            <div className="trust-point">
+              Мы всегда на связи, чтобы ответить на любые вопросы.
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action Section */}
+        <section className="cta-section">
+          <h3 className="cta-section-title">
+            Наша команда помогает получить вашему ребенку уверенное будущее в лучших университетах мира!
+          </h3>
+          <p>Получите нашу экспертную поддержку на каждом этапе поступления.</p>
+          <button className="cta-button">Позвонить</button>
+        </section>
+      </div>
+
+      <footer className="footer">
+        <div className="footer-container">
+          {/* Логотип и политика конфиденциальности */}
+          <div className="footer-left">
+            <img src="/images/LOGO.png" alt="Impact Logo" className="footer-logo" />
+            <p className="footer-privacy">Политика конфиденциальности</p>
+          </div>
+
+          {/* Контактные данные */}
+          <div className="footer-center">
+            <p className="footer-heading">Телефон:</p>
+            <p className="footer-text">+7 (707)622-96-37</p>
+            <p className="footer-text">info@impact-admissions.com</p>
+            <hr className="footer-divider" />
+            <button className="whatsapp-button">Написать в Whatsapp</button>
+          </div>
+
+          {/* Часы работы */}
+          <div className="footer-right">
+            <p className="footer-heading">Мы работаем:</p>
+            <p className="footer-text">ПН-ПТ 10:00 - 20:00</p>
+            <p className="footer-text">СБ-ВС 11:00 - 20:00</p>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

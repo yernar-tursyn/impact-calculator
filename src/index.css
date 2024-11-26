@@ -901,3 +901,326 @@ body {
     padding: 20px;
   }
 }
+
+
+/* Общие стили */
+.main-container {
+  font-family: "Arial", sans-serif;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fffdf6;
+}
+
+/* FAQ Section */
+.faq-section {
+  margin: 0 auto 60px;
+  max-width: 1200px;
+}
+
+.faq-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.faq-item:hover {
+  background-color: #f9f9f9;
+}
+
+.faq-item.expanded {
+  background-color: #f0f0f0;
+}
+
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.25rem;
+  color: #6b52ae;
+}
+
+.faq-index {
+  font-weight: bold;
+  color: #6b52ae;
+}
+
+.faq-question {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.faq-content {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.faq-toggle-icon {
+  font-size: 1.5rem; /* Размер иконки */
+  color: #6b52ae; /* Цвет иконки */
+}
+
+/* University Section */
+.university-section {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+}
+
+.university-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #6b52ae;
+}
+
+.university-intro {
+  font-size: 1rem;
+  margin-bottom: 40px;
+  color: #555;
+}
+
+/* Секция доверия */
+.trust-points {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.trust-point {
+  /* flex: 1; */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1rem;
+  line-height: 1.6;
+  border-radius: 8px;
+  padding: 10px;
+  position: relative;
+}
+
+.trust-point::before {
+  content: "";
+  display: block;
+  width: 3px;
+  min-height: 50px; /* Минимальная высота линии */
+  height: 100%; /* Полная высота блока */
+  background-color: #6b52ae; /* Цвет вертикальной линии */
+  border-radius: 5px;
+  position: absolute;
+  top: 10px; /* Отступ от верхнего края */
+  left: 0; /* Линия располагается слева */
+}
+
+
+/* Call to Action Section */
+.cta-section {
+  background-color: #6b52ae;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.cta-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.cta-description {
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  background-color: #fff;
+  color: #6b52ae;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.cta-button:active {
+  transform: scale(1);
+}
+
+h3.cta-section-title {
+  color: white;
+  font-size: 26px;
+  margin-bottom: 0;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .trust-points {
+    flex-direction: column;
+  }
+
+  .trust-point {
+    padding-left: 20px; /* Увеличиваем отступ для псевдоэлемента */
+  }
+
+  .trust-point::before {
+    min-height: 40px; /* Сохраняем минимальную высоту линии */
+  }
+
+  .faq-header {
+    font-size: 1rem;
+  }
+
+  .faq-content {
+    font-size: 0.875rem;
+  }
+
+  .cta-button {
+    width: 100%;
+  }
+}
+
+/* Основной футер */
+.footer {
+  background-color: #3a3a3a; /* Цвет фона */
+  color: #fff; /* Цвет текста */
+  padding: 30px 20px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Левая секция */
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.footer-logo {
+  width: 150px; /* Размер логотипа */
+  margin-bottom: 10px;
+}
+
+.footer-privacy {
+  font-size: 0.9rem;
+  color: #d1d1d1;
+}
+
+/* Центральная секция */
+.footer-center {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  flex: 1;
+}
+
+.footer-heading {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  margin: 3px 0;
+}
+
+.footer-divider {
+  width: 50%;
+  height: 1px;
+  background-color: #d1d1d1;
+  margin: 10px 0;
+}
+
+.whatsapp-button {
+  background-color: #22c55e; /* Зеленый цвет кнопки */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.whatsapp-button:hover {
+  background-color: #1da851;
+}
+
+/* Правая секция */
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  flex: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    align-items: center;
+  }
+
+  .footer-divider {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 800px) {
+  .footer-divider {
+    width: 55%; /* Ширина divider для диапазона от 800 до 1200 пикселей */
+  }
+}
+
+@media (max-width: 1200px) {
+  .footer-divider {
+    width: 55%; 
+  }
+}

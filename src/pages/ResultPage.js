@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "../index.css"; // Подключаем стили
 
@@ -15,6 +15,11 @@ const ResultPage = () => {
             profession = "Не указано",
         } = {},
     } = location;
+
+    // Прокрутка вверх при загрузке страницы
+    useEffect(() => {
+        window.scrollTo(0, 0); // Прокрутка к началу страницы
+    }, []);
 
     return (
         <>
@@ -75,13 +80,13 @@ const ResultPage = () => {
                     <div className="block-wrapper">
                         <p className="block-description">
                             Мы подготовили детальный расчет всех расходов на обучение и проживание в выбранной стране.
-                        </p>
-                        <div className="block-content">
                             <img
                                 src="/images/Designer-Desk-2--Streamline-Free-Illustrations.svg.png"
                                 alt="Finance Icon"
                                 className="block-image"
                             />
+                        </p>
+                        <div className="block-content">
                             <div className="block-text">
                                 <p>
                                     <strong>Страна:</strong> Великобритания
@@ -94,7 +99,7 @@ const ResultPage = () => {
                                 </p>
                                 <p>
                                     <strong>Питание (USD):</strong>
-                                        $600
+                                    $600
                                 </p>
                                 <p>
                                     <strong>Транспорт (USD):</strong> $100
@@ -255,6 +260,44 @@ const ResultPage = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="cta-block cta-block-result">
+                <div className="cta-content">
+                    <h2 className="cta-title">Ваш анализ готов! Вы знаете затраты, зарплаты и сроки окупаемости. Теперь самое время получить профессиональную поддержку и приступить к реализации вашего плана.</h2>
+                    <p className="cta-description cta-description-result">
+                        Не знаете, с чего начать? Наши эксперты помогут вам сделать первые шаги к поступлению и успешной карьере.
+                    </p>
+                </div>
+                <div className="cta-button-container">
+                    <button className="cta-button">Записаться на консультацию</button>
+                </div>
+            </div>
+
+            <footer className="footer">
+                <div className="footer-container">
+                    {/* Логотип и политика конфиденциальности */}
+                    <div className="footer-left">
+                        <img src="/images/LOGO.png" alt="Impact Logo" className="footer-logo" />
+                        <p className="footer-privacy">Политика конфиденциальности</p>
+                    </div>
+
+                    {/* Контактные данные */}
+                    <div className="footer-center">
+                        <p className="footer-heading">Телефон:</p>
+                        <p className="footer-text">+7 (707)622-96-37</p>
+                        <p className="footer-text">info@impact-admissions.com</p>
+                        <hr className="footer-divider" />
+                        <button className="whatsapp-button">Написать в Whatsapp</button>
+                    </div>
+
+                    {/* Часы работы */}
+                    <div className="footer-right">
+                        <p className="footer-heading">Мы работаем:</p>
+                        <p className="footer-text">ПН-ПТ 10:00 - 20:00</p>
+                        <p className="footer-text">СБ-ВС 11:00 - 20:00</p>
+                    </div>
+                </div>
+            </footer>
         </>
     );
 };

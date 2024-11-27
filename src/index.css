@@ -67,7 +67,7 @@ code {
   position: relative;
   overflow: hidden;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
+  /* background-color: rgba(255, 255, 255, 0.8); */
   /* Полупрозрачный фон */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -78,6 +78,7 @@ code {
 
 /* Картинка в слайдере */
 .slide-image {
+  transition: transform 0.5s ease, opacity 0.5s ease;
   width: 100%;
   /* Изображение адаптируется под ширину слайдера */
   height: 100%;
@@ -540,6 +541,11 @@ span.description-word {
   gap: 20px;
 }
 
+
+.cta-block-result {
+  max-width: 960px;
+}
+
 /* Контент блока (заголовок и описание) */
 .cta-content {
   max-width: 70%;
@@ -621,6 +627,14 @@ span.description-word {
     text-align: left;
     padding: 20px 20px;
     margin: 20px 40px;
+  }
+
+  .cta-block-result {
+    margin: 20px 20px;
+  }
+
+  .cta-description-result {
+    margin-bottom: 0 !important;
   }
 
   .cta-content {
@@ -1417,7 +1431,8 @@ h3.cta-section-title {
 .budget-block {
   background: #ffffff;
   padding: 20px;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
+  max-width: 1000px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -1444,6 +1459,9 @@ h3.cta-section-title {
 .block-description {
   font-size: 16px;
   color: #4a4a4a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .block-content {
@@ -1453,7 +1471,7 @@ h3.cta-section-title {
 }
 
 .block-image {
-  max-width: 150px;
+  max-width: 240px;
   height: auto;
 }
 
@@ -1495,6 +1513,8 @@ h3.cta-section-title {
   }
 
   .block-description {
+    display: flex;
+    gap: 25px;
     font-size: 14px;
   }
 

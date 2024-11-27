@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import '../index.css'
@@ -80,16 +80,15 @@ const tests = [
 ];
 
 const images = [
-    "https://img1.akspic.ru/previews/5/3/0/9/7/179035/179035-voda-gora-gidroresursy-rastenie-oblako-500x.jpg",
-    "https://img.freepik.com/premium-vector/beautiful-landscape-nature-background-images-free-download-freepik-vector_1305309-1561.jpg",
-    "https://img.freepik.com/fotos-premium/hermosos-paisajes-lagos-hermosos-paisajos-lagos_1234738-411657.jpg?w=1800",
+    "/images/IP1.png",
+    "/images/IP2.png",
+    "/images/IP3.png",
 ];
 
 const MainPage = () => {
 
     const navigate = useNavigate();
 
-    const [selectedIncome, setSelectedIncome] = useState(""); // Добавляем состояние для дохода
     const [selectedCountry, setSelectedCountry] = useState("");
     const [selectedFormat, setSelectedFormat] = useState("");
     const [selectedBudget, setSelectedBudget] = useState("");
@@ -195,6 +194,7 @@ const MainPage = () => {
 
 
     const [currentIndex, setCurrentIndex] = useState(0);
+    const intervalRef = useRef(null);
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -204,6 +204,14 @@ const MainPage = () => {
         setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     };
 
+    // Автоматическое переключение слайдов каждые 3 секунды
+    useEffect(() => {
+        intervalRef.current = setInterval(() => {
+            handleNext();
+        }, 3000); // Интервал в миллисекундах
+
+        return () => clearInterval(intervalRef.current); // Очистка интервала при размонтировании
+    }, []);
 
     return (
         <>

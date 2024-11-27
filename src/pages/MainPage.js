@@ -89,6 +89,9 @@ const MainPage = () => {
 
     const navigate = useNavigate();
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [paymentCompleted, setPaymentCompleted] = useState(false);
+
     const [selectedCountry, setSelectedCountry] = useState("");
     const [selectedFormat, setSelectedFormat] = useState("");
     const [selectedBudget, setSelectedBudget] = useState("");
@@ -105,8 +108,8 @@ const MainPage = () => {
         if (
             !selectedCountry ||
             !selectedFormat ||
-            !selectedBudget || // Проверяем бюджет
-            !selectedLivingCost || // Проверяем затраты на проживание
+            !selectedBudget ||
+            !selectedLivingCost ||
             !selectedFinancialAid ||
             !selectedDirection ||
             !selectedProfession
@@ -115,19 +118,25 @@ const MainPage = () => {
             return;
         }
 
-        // Передача данных на страницу результатов
-        navigate("/result", {
-            state: {
-                country: selectedCountry,
-                format: selectedFormat,
-                budget: selectedBudget, // Передаем бюджет
-                livingCost: selectedLivingCost, // Передаем затраты на проживание
-                financialAid: selectedFinancialAid,
-                direction: selectedDirection,
-                profession: selectedProfession,
-            },
-        });
+        if (paymentCompleted) {
+            // Если оплата уже завершена, переходим на страницу результатов
+            navigate("/result", {
+                state: {
+                    country: selectedCountry,
+                    format: selectedFormat,
+                    budget: selectedBudget,
+                    livingCost: selectedLivingCost,
+                    financialAid: selectedFinancialAid,
+                    direction: selectedDirection,
+                    profession: selectedProfession,
+                },
+            });
+        } else {
+            // Иначе открываем модальное окно
+            setIsModalOpen(true);
+        }
     };
+
 
 
 
@@ -192,6 +201,10 @@ const MainPage = () => {
         return testResults.reduce((acc, curr) => (curr.isCorrect ? acc + 1 : acc), 0);
     };
 
+    const handlePaymentCompletion = () => {
+        setPaymentCompleted(true);
+        setIsModalOpen(false); // Закрыть модальное окно
+    };
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const intervalRef = useRef(null);
@@ -487,37 +500,47 @@ const MainPage = () => {
 
             <div className="app-container">
                 {/* Блок оплаты */}
-                <section className="payment-block">
-                    <h2>Мы стремимся сделать качественное планирование доступным каждому!</h2>
-                    <p>
-                        С ImpactPlanner вы получите мгновенный результат <a href="#">всего за $10</a>.
-                    </p>
-                    <p>
-                        Аналогичные услуги консультантов стоят $1000 и требуют до 2 недель работы.
-                    </p>
-
-                    <div className="payment-details">
-                        <h3>Как оплатить?</h3>
-                        <ul>
-                            <li>Заполните ваши имя, email и телефон.</li>
-                            <li>Выберите способ оплаты и оплатите.</li>
-                            <li>
-                                В течение 5 минут на указанный email придет результат.
-                            </li>
-                        </ul>
+                {isModalOpen && (
+                    <div className="modal-overlay">
+                        <div className="modal-content">
+                            <button className="modal-close" onClick={() => setIsModalOpen(false)}>
+                                &times;
+                            </button>
+                            <h2>Мы стремимся сделать качественное планирование доступным каждому!</h2>
+                            <p>
+                                С ImpactPlanner вы получите мгновенный результат <a href="#">всего за $10</a>.
+                            </p>
+                            <p>
+                                Аналогичные услуги консультантов стоят $1000 и требуют до 2 недель работы.
+                            </p>
+                            <div className="payment-details">
+                                <h3>Как оплатить?</h3>
+                                <ul>
+                                    <li>Заполните ваши имя, email и телефон.</li>
+                                    <li>Выберите способ оплаты и оплатите.</li>
+                                    <li>В течение 5 минут на указанный email придет результат.</li>
+                                </ul>
+                            </div>
+                            <form className="personal-data-form">
+                                <input type="text" placeholder="Имя" required />
+                                <input type="email" placeholder="Email" required />
+                                <input type="tel" placeholder="Телефон" required />
+                                <button
+                                    type="button"
+                                    className="pay-button"
+                                    onClick={handlePaymentCompletion}
+                                >
+                                    Оплатить
+                                </button>
+                                <label>
+                                    <input type="checkbox" required />
+                                    Я принимаю пользовательское соглашение.
+                                </label>
+                            </form>
+                        </div>
                     </div>
+                )}
 
-                    <form className="personal-data-form">
-                        <input type="text" placeholder="Имя" required />
-                        <input type="email" placeholder="Email" required />
-                        <input type="tel" placeholder="Телефон" required />
-                        <button type="submit" className="pay-button">Оплатить</button>
-                        <label>
-                            <input type="checkbox" required />
-                            Я принимаю пользовательское соглашение.
-                        </label>
-                    </form>
-                </section>
 
                 {/* Блок планирования бюджета */}
                 <section className="budget-planning-block">

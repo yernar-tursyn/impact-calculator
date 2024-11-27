@@ -3,6 +3,7 @@ import Confetti from "react-confetti";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import '../index.css'
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const countries = ["США", "Канада", "Германия", "Великобритания", "Австралия"];
 const formats = ["Очное обучение", "Дистанционное обучение", "Смешанное обучение"];
@@ -90,7 +91,9 @@ const MainPage = () => {
     const navigate = useNavigate();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [paymentCompleted, setPaymentCompleted] = useState(false);
+    const [paymentCompleted, setPaymentCompleted] = useState(
+        localStorage.getItem("paymentCompleted") === "true"
+    );
 
     const [selectedCountry, setSelectedCountry] = useState("");
     const [selectedFormat, setSelectedFormat] = useState("");
@@ -136,9 +139,6 @@ const MainPage = () => {
             setIsModalOpen(true);
         }
     };
-
-
-
 
 
     const [activeFAQ, setActiveFAQ] = useState(null);
@@ -201,10 +201,78 @@ const MainPage = () => {
         return testResults.reduce((acc, curr) => (curr.isCorrect ? acc + 1 : acc), 0);
     };
 
-    const handlePaymentCompletion = () => {
-        setPaymentCompleted(true);
-        setIsModalOpen(false); // Закрыть модальное окно
+    const handlePaymentCompletion = async (event) => {
+        event.preventDefault(); // Предотвращаем перезагрузку страницы
+
+        const form = event.target.closest("form");
+        const formData = {
+            name: form.querySelector('input[placeholder="Имя"]').value.trim(),
+            email: form.querySelector('input[placeholder="Email"]').value.trim(),
+            phone: form.querySelector('input[placeholder="Телефон"]').value.trim(),
+        };
+
+        // Проверяем, что все поля заполнены
+        if (!formData.name || !formData.email || !formData.phone) {
+            alert("Пожалуйста, заполните все поля.");
+            return;
+        }
+
+        try {
+            // 1. Регистрация пользователя
+            const userResponse = await axios.post("http://80.90.183.87/users/", {
+                username: formData.email, // Используем email как имя пользователя
+                password: "test", // Фиксированный пароль
+                name: formData.name,
+                phone: formData.phone,
+            });
+
+            console.log("User created:", userResponse.data);
+
+            // 2. Получение токена
+            const tokenResponse = await axios.post("http://80.90.183.87/api/token/", {
+                username: formData.email,
+                password: "test",
+            });
+
+            const accessToken = tokenResponse.data.access; // Достаем токен
+            console.log("Access Token:", accessToken);
+
+            // 3. Получение payment URL
+            const paymentResponse = await axios.get("http://80.90.183.87/payment/", {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+
+            if (paymentResponse.status === 200 && paymentResponse.data.payment_url) {
+                const paymentUrl = paymentResponse.data.payment_url;
+                console.log("Payment URL:", paymentUrl);
+
+                // Обновляем флаг оплаты и сохраняем его
+                setPaymentCompleted(true);
+                localStorage.setItem("paymentCompleted", "true");
+
+                // Перенаправляем пользователя на страницу оплаты
+                window.location.href = paymentUrl;
+            } else {
+                alert("Ошибка: Не удалось получить ссылку на оплату. Попробуйте позже.");
+            }
+        } catch (error) {
+            // Улучшенная обработка ошибок
+            if (error.response) {
+                console.error("Ошибка ответа сервера:", error.response.data);
+                alert(`Ошибка: ${error.response.data.detail || "Попробуйте снова."}`);
+            } else if (error.request) {
+                console.error("Ошибка запроса:", error.request);
+                alert("Ошибка: Сервер не отвечает. Попробуйте позже.");
+            } else {
+                console.error("Неизвестная ошибка:", error.message);
+                alert("Неизвестная ошибка. Проверьте данные и попробуйте снова.");
+            }
+        }
     };
+
+
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const intervalRef = useRef(null);
